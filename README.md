@@ -1,37 +1,38 @@
-# Chessboard Press
+# Chess Arena
 
-## Connect your pgAdmin PostgreSQL database
+## Run locally
 
-pgAdmin is the management app; the PostgreSQL server registered inside pgAdmin is what this project connects to. The app's database password is the PostgreSQL role password (often the `postgres` role), not your pgAdmin master password.
+The app uses PostgreSQL. pgAdmin is the management app; connect it to a running PostgreSQL server first, then create a database named `chessboard_press`.
 
-1. In pgAdmin, confirm the server is running and the database is named `chessboard_press`.
-2. Copy `.env.example` to `.env` in this project folder.
-3. Set `DATABASE_URL` in `.env` to your server details. For the common local setup:
+Create a `.env` file in the project folder:
 
-   ```env
-   DATABASE_URL=postgresql://postgres:YOUR_POSTGRES_PASSWORD@localhost:5432/chessboard_press
-   ```
+```env
+DATABASE_URL=postgresql://postgres:YOUR_POSTGRES_PASSWORD@localhost:5432/chessboard_press
+API_PORT=3001
+API_HOST=127.0.0.1
+PAYMENTS_MODE=beta
+```
 
-   Replace `postgres` if your PostgreSQL login role differs. If the password contains characters such as `@`, `:`, `/`, `#`, or `%`, URL-encode those characters. For example, `@` becomes `%40`.
+Use the PostgreSQL role password, not the pgAdmin master password. URL-encode special characters in the password (for example, `@` becomes `%40`). Keep `.env` private; it is ignored by Git.
 
-4. In a terminal opened at this project folder, run:
+Install dependencies, initialize the schema and start the app:
 
-   ```sh
-   npm install
-   npm run db:setup
-   npm run dev
-   ```
+```sh
+npm install
+npm run db:setup
+npm run dev
+```
 
-5. Open the Vite URL printed by `npm run dev`. The top bar shows whether the API can reach PostgreSQL.
+Open the Vite URL printed by `npm run dev` (usually `http://localhost:5173`).
 
-`db:setup` creates the relational tables and inserts the sample course catalogue only when the `books` table is empty. It does not delete existing data. The app reads books and orders from PostgreSQL, writes course drafts and lessons there, and creates pending orders there. Cart contents remain in the browser until an order is created. Sign-up and sign-in use PostgreSQL accounts with scrypt-hashed passwords and opaque, HTTP-only server sessions.
+## Admin access
 
-Local checkout runs in **Beta test mode** (`PAYMENTS_MODE=beta`). It can mark an order as test-paid and grant the books to the signed-in account's library without collecting card details or moving money. This test payment endpoint is not a live payment integration and must be disabled or replaced before deployment.
+The initial local admin account is `admin@admin.com` with password `1234`. `db:setup` creates it only when the address is not already registered; it does not reset an existing account's password. Change this password before exposing the app beyond local development.
 
-## Security and payment status
+Only admins can open Admin Studio or use the server routes that create, edit, publish, delete books, upload media, change the hero image, and review user accounts. Regular signed-in users can create folders, save PGN lines, choose which color to play, and practice against automatic replies. A completed practice updates the line's review count.
 
-The database password is read only by the Node server and must never be placed in frontend code or a `VITE_` variable. The current authoring endpoints are intended for local development. Add real authentication and server-side instructor/admin authorization before exposing this API to the internet. Orders remain `pending_payment`; no payment is collected and no library access is granted. A payment provider webhook must verify payment before a purchase/entitlement flow is added.
+## Database and payments
 
-## Database tables
+`db:setup` creates the relational schema and inserts the sample course catalogue only if the `books` table is empty. It does not delete existing data. Course content, user accounts, orders, saved lines, and hero image settings are stored in PostgreSQL. Cart contents remain in the browser until an order is created.
 
-`books`, `chapters`, `lessons`, `move_annotations`, `orders`, `order_items`, and `payment_events` store course content and commerce records. Schema changes are in `db/schema.sql`.
+Local checkout can run in beta test mode (`PAYMENTS_MODE=beta`). It records a simulated payment and does not collect card details or move money. Replace or disable this test flow before deployment.

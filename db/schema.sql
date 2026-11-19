@@ -37,10 +37,12 @@ CREATE TABLE IF NOT EXISTS lessons (
   pgn TEXT NOT NULL DEFAULT '',
   starting_fen TEXT,
   key_idea TEXT NOT NULL DEFAULT '',
+  content JSONB NOT NULL DEFAULT '[]'::jsonb,
   position INTEGER NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE(chapter_id, position)
 );
+ALTER TABLE lessons ADD COLUMN IF NOT EXISTS content JSONB NOT NULL DEFAULT '[]'::jsonb;
 
 CREATE TABLE IF NOT EXISTS move_annotations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -121,6 +123,34 @@ CREATE TABLE IF NOT EXISTS purchases (
   UNIQUE(order_id, book_id)
 );
 ALTER TABLE purchases ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES users(id) ON DELETE CASCADE;
+
+CREATE TABLE IF NOT EXISTS app_settings (
+  key TEXT PRIMARY KEY,
+  value JSONB NOT NULL DEFAULT '{}'::jsonb,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS line_folders (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS line_folders_user_name_idx ON line_folders(user_id, LOWER(name));
+
+CREATE TABLE IF NOT EXISTS study_lines (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  folder_id UUID NOT NULL REFERENCES line_folders(id) ON DELETE CASCADE,
+  title TEXT NOT NULL,
+  pgn TEXT NOT NULL,
+  user_color CHAR(1) NOT NULL DEFAULT 'w' CHECK (user_color IN ('w','b')),
+  review_count INTEGER NOT NULL DEFAULT 0,
+  last_reviewed_at TIMESTAMPTZ,
+  next_review_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS study_lines_folder_idx ON study_lines(folder_id, created_at);
 
 CREATE INDEX IF NOT EXISTS chapters_book_position_idx ON chapters(book_id, position);
 CREATE INDEX IF NOT EXISTS lessons_chapter_position_idx ON lessons(chapter_id, position);
