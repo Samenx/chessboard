@@ -7,5 +7,10 @@ html[dir=rtl] .nav-user{margin-left:0;margin-right:auto}
 html[dir=rtl] .index-page,html[dir=rtl] .auth-page,html[dir=rtl] .library-page,html[dir=rtl] .product-page,html[dir=rtl] .learn-page,html[dir=rtl] .commerce-page,html[dir=rtl] .account-page{direction:rtl}
 html[dir=rtl] .board-square-wrap,html[dir=rtl] .course-board-shell,html[dir=rtl] .studio-board,html[dir=rtl] .exercise-editor-board,html[dir=rtl] .lesson-interactive-board,html[dir=rtl] .notation-row{direction:ltr}
 html[dir=rtl] .learn-footer,html[dir=rtl] .learn-actions,html[dir=rtl] .product-foot,html[dir=rtl] .library-actions{direction:rtl}
-html[dir=rtl] input[type=email],html[dir=rtl] input[type=password],html[dir=rtl] input[type=number],html[dir=rtl] input[type=url],html[dir=rtl] input[placeholder*=example],html[dir=rtl] .notation-row{direction:ltr;text-align:left}
+html[dir=rtl] .author-page,html[dir=rtl] .review-page,html[dir=rtl] .review-composer,html[dir=rtl] .studio-page-card,html[dir=rtl] .lesson-read-view,html[dir=rtl] .branching-exercise,html[dir=rtl] .exercise-editor{direction:rtl}
+html[dir=rtl] input[type=email],html[dir=rtl] input[type=password],html[dir=rtl] input[type=number],html[dir=rtl] input[type=url],html[dir=rtl] input[placeholder*=example],html[dir=rtl] .notation-row,html[dir=rtl] .board-controls,html[dir=rtl] .exercise-add-move,html[dir=rtl] .review-chessboard,html[dir=rtl] .position-editor-board{direction:ltr;text-align:left}
+html[dir=rtl] .learn-footer>button:nth-last-child(-n+2) svg{transform:scaleX(-1)}
+html[dir=rtl] .sector-move-controls,html[dir=rtl] .board-controls{direction:ltr}
+html[dir=rtl] .lesson-content-card,html[dir=rtl] .sector-explanation-pane,html[dir=rtl] .exercise-node-copy{ text-align:start }
+html[dir=rtl] [dir=ltr],html[dir=ltr] [dir=rtl]{unicode-bidi:isolate}
 @media(max-width:760px){html[dir=rtl] .store-nav nav{right:0;left:auto}html[dir=rtl] .nav-search{direction:rtl}}

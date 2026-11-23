@@ -1,16 +1,18 @@
-export const DEFAULT_BRAND = Object.freeze({ name: 'Chess Arena', primary: '#1769aa', logoUrl: '' });
+export const DEFAULT_BRAND = Object.freeze({ name: 'Chess Arena', primary: '#1769aa', logoUrl: '', theme: 'light' });
 
 export function normalizeBrand(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('Brand settings must be an object.');
   const name = typeof input.name === 'string' ? input.name.trim() : '';
   const primary = typeof input.primary === 'string' ? input.primary.trim().toLowerCase() : '';
   const logoUrl = typeof input.logoUrl === 'string' ? input.logoUrl.trim() : '';
+  const theme = input.theme === undefined ? DEFAULT_BRAND.theme : input.theme;
   if (!name || name.length > 60) throw new Error('Brand name must be between 1 and 60 characters.');
   if (!/^#[0-9a-f]{6}$/.test(primary)) throw new Error('Brand color must be a six-digit hex color.');
+  if (!['light', 'dark'].includes(theme)) throw new Error('Default theme must be light or dark.');
   if (logoUrl.length > 2000 || (logoUrl && !logoUrl.startsWith('/media/') && !/^https:\/\//i.test(logoUrl))) {
     throw new Error('Logo must use an HTTPS URL or a Chess Arena media path.');
   }
-  return { name, primary, logoUrl };
+  return { name, primary, logoUrl, theme };
 }
 
 export function darkenHex(hex, amount = 0.14) {

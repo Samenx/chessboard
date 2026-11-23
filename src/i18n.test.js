@@ -8,6 +8,9 @@ test('English is the default and unknown authored copy stays intact', () => {
 });
 
 test('Arabic translates core navigation and declares RTL direction', () => {
+  assert.equal(translate('Courses', 'ar'), '\u0627\u0644\u062f\u0648\u0631\u0627\u062a');
+  assert.equal(translate('White to move', 'ar'), '\u0627\u0644\u0623\u0628\u064a\u0636 \u064a\u0644\u0639\u0628');
+  assert.equal(translate('Restart exercise', 'ar'), '\u0623\u0639\u062f \u0627\u0644\u062a\u0645\u0631\u064a\u0646');
   assert.equal(translate('Courses', 'ar'), 'الدورات');
   assert.equal(translate('Mark lesson complete', 'ar'), 'أكمل الدرس');
   assert.equal(translate('Course language', 'ar'), 'لغة الدورة');
