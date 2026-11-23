@@ -1,0 +1,191 @@
+/* Student course pages: quiet editorial layout with the board as the focal point. */
+.product-page {
+  width: min(100%, 1360px);
+  padding: clamp(26px, 4vw, 54px) clamp(16px, 3.5vw, 48px) 76px;
+}
+
+.product-page > .back-crumb {
+  min-height: 36px;
+  margin-bottom: clamp(18px, 3vw, 34px);
+  font-size: 12px;
+}
+
+.product-main {
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+}
+
+.product-hero-cover {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 0.79;
+  max-height: 560px;
+  box-shadow: 0 18px 42px #1723311a;
+}
+
+.product-overview { padding: 0; min-width: 0; }
+.detail-tags { font-size: 10px; line-height: 1.6; }
+.product-overview h1 {
+  max-width: 780px;
+  font-size: clamp(30px, 4.1vw, 52px);
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  margin: 14px 0 12px;
+}
+
+.review-line { flex-wrap: wrap; font-size: 12px; line-height: 1.5; }
+.product-overview > p { max-width: 720px; font-size: 15px; line-height: 1.8; margin: 23px 0; }
+.product-learning { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px 18px; margin: 24px 0 30px; }
+.product-learning > b { grid-column: 1 / -1; font-size: 13px; }
+.product-learning > span { align-items: flex-start; font-size: 12px; line-height: 1.55; }
+.product-learning > span svg { flex: 0 0 auto; margin-top: 1px; }
+
+.purchase-box {
+  width: 100%;
+  max-width: 720px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px 24px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px #1723310a;
+}
+
+.purchase-box > div > strong { font-size: 26px; }
+.purchase-box > div > small { font-size: 11px; }
+.purchase-box > .blue-button { min-height: 46px; padding-inline: 20px; font-size: 13px; }
+.purchase-box > span:last-child { grid-column: 1 / -1; font-size: 11px; line-height: 1.5; }
+
+.product-tabs {
+  position: sticky;
+  top: 66px;
+  z-index: 5;
+  display: flex;
+  gap: 7px;
+  margin: 52px 0 0;
+  padding: 10px 0 0;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+
+.product-tabs button { min-height: 44px; padding-inline: 16px; font-size: 12px; }
+.contents-layout { grid-template-columns: minmax(0, 1fr) minmax(240px, 300px); gap: clamp(28px, 5vw, 64px); padding-top: 28px; align-items: start; }
+.contents-layout h2 { font-size: 24px; line-height: 1.3; }
+.contents-layout > section > .subtle-copy { margin: 8px 0 22px; font-size: 12px; }
+.book-chapter { margin: 14px 0; border-radius: 10px; }
+.book-chapter-heading { min-height: 68px; grid-template-columns: 42px minmax(0, 1fr) 20px; padding: 12px 16px; }
+.book-chapter-heading > span { font-size: 12px; }
+.book-chapter-heading b { font-size: 14px; }
+.book-chapter-heading small { font-size: 11px; }
+.book-chapter .preview-lesson { min-height: 60px; margin-inline: 58px 16px; padding: 12px 0; }
+.preview-lesson > span:first-child { font-size: 12px; }
+.preview-lesson b { font-size: 13px; }
+.preview-lesson small { font-size: 11px; }
+.product-aside { position: sticky; top: 130px; padding: 22px; gap: 17px; border-radius: 12px; }
+.product-aside > b { font-size: 15px; }
+.product-aside > span { font-size: 12px; line-height: 1.5; }
+.product-aside .overview-progress { width: 100%; }
+
+.learn-page {
+  width: 100%;
+  max-width: none;
+  min-height: calc(100vh - 66px);
+  margin: 0;
+  padding: 26px clamp(16px, 4vw, 54px) 72px;
+  background: #111820;
+}
+
+.learn-top, .course-toc, .learn-columns { width: min(100%, 1280px); }
+.learn-top { align-items: center; gap: 22px; padding: 4px 0 20px; margin: 0 auto 18px; }
+.learn-top h1 { max-width: 760px; font-size: clamp(21px, 2.5vw, 30px); line-height: 1.25; letter-spacing: -0.025em; }
+.learn-top .back-crumb { min-height: 32px; font-size: 12px; }
+.learn-breadcrumb { font-size: 12px; }
+.lesson-meter { width: 210px; min-width: 160px; font-size: 10px; }
+.lesson-meter > i { height: 6px; border-radius: 999px; overflow: hidden; }
+.lesson-meter > i b { border-radius: inherit; }
+
+.course-toc { margin: 0 auto 24px; border-radius: 10px; overflow: clip; }
+.course-toc > summary { min-height: 52px; padding: 13px 18px; font-size: 14px; }
+.course-toc-chapter h3 { font-size: 12px; line-height: 1.5; }
+.course-toc-chapter button { min-height: 42px; border-radius: 6px; }
+.course-toc-chapter button > b { font-size: 12px; line-height: 1.45; }
+
+.learn-columns { grid-template-columns: minmax(0, 1fr) minmax(360px, 0.88fr); gap: clamp(20px, 3vw, 40px); margin: 0 auto; }
+.learn-columns-sectors { grid-template-columns: minmax(0, 1fr) !important; }
+.learn-columns-sectors .learn-text { width: 100%; max-width: none; }
+.learn-text { padding: clamp(20px, 3vw, 34px); border-radius: 12px; }
+.learn-chapter-label { font-size: 10px; }
+.learn-text h2 { font-size: clamp(22px, 2.6vw, 32px); line-height: 1.3; }
+.learn-text > p { max-width: 760px; font-size: 15px; line-height: 1.8; }
+.teacher-line { font-size: 12px; }
+.teacher-line > span { width: 30px; height: 30px; font-size: 10px; }
+.lesson-sector-view { gap: 16px; margin: 22px 0 30px; }
+.lesson-sector-toolbar > span { padding: 8px 12px; font-size: 11px; }
+.lesson-sector-toolbar > b { font-size: 18px; }
+.lesson-sector-tabs { display: flex; gap: 8px; max-width: 100%; overflow-x: auto; padding: 5px 2px 10px; scrollbar-width: thin; }
+.lesson-sector-tabs button { flex: 0 0 auto; min-height: 42px; max-width: min(280px, 72vw); white-space: nowrap; font-size: 12px; }
+.lesson-sector-tabs button.active { box-shadow: inset 0 0 0 1px currentColor; }
+.lesson-content-card.lesson-sector-workspace { grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.82fr); gap: clamp(22px, 4vw, 60px); min-height: 0; padding: 20px 0; }
+.sector-board-pane { max-width: 700px; }
+.sector-explanation-pane { padding: clamp(20px, 3vw, 34px); border-radius: 10px; }
+.sector-explanation-pane h2 { font-size: clamp(21px, 2.2vw, 28px); line-height: 1.3; }
+.sector-explanation-pane > p { font-size: 15px; line-height: 1.75; }
+.lesson-sector-controls { gap: 12px; margin-top: 8px; }
+.lesson-sector-controls button, .learn-footer button { min-height: 42px; font-size: 12px; }
+.learn-footer { gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.learn-footer .blue-button { min-height: 46px; padding: 11px 18px; font-size: 12px; }
+
+html[data-theme="light"] .learn-page { background: #f2f1ed; }
+html[data-theme="light"] .learn-top { border-color: #d9d9d2; }
+html[data-theme="light"] .learn-text { box-shadow: 0 12px 32px #26313a0b; }
+html[data-theme="light"] .course-toc { box-shadow: 0 8px 24px #26313a08; }
+html[data-theme="light"] .lesson-sector-tabs button { border: 1px solid #d9e0e4; }
+html[data-theme="dark"] .product-tabs { background: #141a20; border-color: #313b44; }
+html[data-theme="dark"] .contents-layout h2 { color: #e4e9ed; }
+html[data-theme="dark"] .product-aside, html[data-theme="dark"] .purchase-box { background: #202932; border-color: #35424c; }
+html[data-theme="dark"] .book-chapter { border-color: #35424c; }
+html[data-theme="dark"] .book-chapter-heading { background: #202932; }
+html[data-theme="dark"] .book-chapter-heading b, html[data-theme="dark"] .preview-lesson b { color: #e0e7ed; }
+html[data-theme="dark"] .preview-lesson { border-color: #35424c; }
+
+@media (max-width: 900px) {
+  .product-main { grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr); gap: 26px; }
+  .product-aside { position: static; }
+  .learn-columns { grid-template-columns: minmax(0, 1fr) minmax(300px, 0.86fr); gap: 20px; }
+  .lesson-content-card.lesson-sector-workspace { grid-template-columns: minmax(0, 1fr) minmax(250px, 0.85fr); }
+}
+
+@media (max-width: 680px) {
+  .product-page { padding: 20px 16px 52px; }
+  .product-main { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .product-hero-cover { width: min(100%, 360px); max-height: 460px; margin-inline: auto; }
+  .product-overview h1 { font-size: clamp(30px, 8vw, 42px); }
+  .product-overview > p { font-size: 14px; }
+  .product-learning { grid-template-columns: minmax(0, 1fr); }
+  .purchase-box { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  .purchase-box > .blue-button { width: 100%; justify-content: center; }
+  .product-tabs { top: 62px; margin-top: 32px; }
+  .contents-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .book-chapter .preview-lesson { margin-inline: 14px; }
+  .learn-page { padding: 18px 14px 48px; }
+  .learn-top { align-items: flex-start; flex-direction: column; gap: 15px; padding-bottom: 16px; }
+  .lesson-meter { width: 100%; max-width: none; text-align: start; }
+  .course-toc > summary { align-items: flex-start; flex-direction: column; gap: 5px; }
+  .course-toc-list { grid-template-columns: minmax(0, 1fr); }
+  .learn-columns { grid-template-columns: minmax(0, 1fr); }
+  .learn-text { padding: 18px; }
+  .lesson-content-card.lesson-sector-workspace { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 8px 0; }
+  .sector-explanation-pane { padding: 20px; }
+  .lesson-sector-controls { justify-content: space-between; }
+  .learn-footer { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .learn-footer > button:first-child { grid-column: 1 / -1; justify-content: center; }
+  .learn-footer .blue-button { justify-content: center; }
+}
+
+@media (max-width: 380px) {
+  .product-page { padding-inline: 12px; }
+  .product-tabs button { padding-inline: 10px; }
+  .learn-page { padding-inline: 10px; }
+  .learn-text { padding: 15px; }
+  .lesson-sector-controls button { padding-inline: 9px; }
+}
