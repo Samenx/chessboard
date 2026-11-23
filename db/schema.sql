@@ -162,6 +162,8 @@ CREATE TABLE IF NOT EXISTS lesson_pages (
   UNIQUE (lesson_id, position)
 );
 CREATE INDEX IF NOT EXISTS lesson_pages_order_idx ON lesson_pages(lesson_id, position);
+ALTER TABLE lesson_progress
+  ADD COLUMN IF NOT EXISTS page_id UUID REFERENCES lesson_pages(id) ON DELETE SET NULL;
 
 CREATE TABLE IF NOT EXISTS cart_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

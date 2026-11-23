@@ -19,6 +19,15 @@ test('first-class pages can contain multiple blocks and retain page order', () =
   assert.equal(flattenLessonPages(pages).length, 3);
 });
 
+test('first-class page IDs remain stable and duplicates are rejected', () => {
+  const id = '0194a7b2-3c6d-7e8f-9a01-23456789abcd';
+  const [page] = normalizeLessonPages({ pages: [{ id, title: 'Named page', blocks: [] }] });
+  assert.equal(page.id, id);
+  assert.throws(() => normalizeLessonPages({ pages: [
+    { id, title: 'One', blocks: [] }, { id, title: 'Two', blocks: [] },
+  ] }), /unique/);
+});
+
 test('invalid page structures and excessive page counts are rejected', () => {
   assert.throws(() => normalizeLessonPages({ pages: [{ title: 'Missing blocks' }] }), /blocks must be a list/);
   assert.throws(() => normalizeLessonPages({ pages: [{ title: 'x'.repeat(181), blocks: [] }] }), /title/);

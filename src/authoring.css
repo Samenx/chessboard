@@ -8,5 +8,14 @@
 .overview-progress>div b{color:var(--blue);font-family:var(--mono)}
 .overview-progress>i{height:4px;background:var(--soft)}
 .overview-progress>i>b{display:block;height:100%;background:var(--blue)}
+.studio-pages-panel{display:grid;gap:8px;margin:22px 0;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--soft)}
+.studio-pages-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:7px}
+.studio-pages-heading>div{display:grid;gap:3px}.studio-pages-heading small{font-size:9px;letter-spacing:.12em;color:var(--muted)}.studio-pages-heading b{font-size:15px}
+.studio-page-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;align-items:center;gap:4px;padding:5px 8px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.studio-page-row.selected-page{border-color:var(--blue);box-shadow:0 0 0 1px color-mix(in srgb,var(--blue) 16%,transparent)}
+.studio-page-select{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:9px;min-width:0;padding:5px 2px;border:0;background:transparent;color:inherit;text-align:start;cursor:pointer}
+.studio-page-select>span{font:11px var(--mono);color:var(--blue)}.studio-page-select>b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.studio-page-select>small{color:var(--muted);font-size:10px}
+.studio-pages-panel+.studio-sector-heading{margin-top:25px}
+@media(max-width:600px){.studio-pages-panel{margin:15px 0;padding:11px}.studio-page-row{grid-template-columns:minmax(0,1fr) auto auto}.studio-page-row>.plain-action:last-child{grid-column:1/-1;justify-self:end}.studio-page-select{grid-template-columns:27px minmax(0,1fr)}.studio-page-select>small{grid-column:2}}
 @media(max-width:700px){.chapter-open-card{grid-template-columns:28px minmax(0,1fr) auto auto}.chapter-open-card .blue-button{grid-column:2/-1;justify-self:start}.chapter-lesson-row{grid-template-columns:24px minmax(0,1fr) repeat(5,auto);gap:5px}.chapter-lesson-row button{min-width:0!important;padding-inline:5px}}
 @media(max-width:460px){.chapter-lesson-row{grid-template-columns:24px minmax(0,1fr) repeat(2,auto)}.chapter-lesson-row button:nth-of-type(n+3){grid-row:auto}.chapter-lesson-row small{max-width:none}}
