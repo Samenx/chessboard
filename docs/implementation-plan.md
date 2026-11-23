@@ -32,7 +32,8 @@ The repository audit found a working small product whose key models are still to
 - Added instructor course creation and ownership: instructors can see the published catalogue and their own drafts, and can manage only courses they created; administrators retain global course controls.
 - Added additive migration `005_course_ownership.sql` and a matching schema declaration for `books.created_by`; legacy courses remain administrator-managed.
 - Kept platform brand settings and user-role management administrator-only.
-- Remaining: instructor profile metadata, first-class lesson page storage, and a broader authorization review.
+- Added versioned first-class lesson page storage with migration `007_lesson_pages.sql`, an additive backfill from existing JSONB sectors, compatibility reads, and transactional dual-writes. Paid-content projections hide the new page payload too.
+- Remaining: instructor profile metadata, richer multi-block page editing in Studio, and a broader authorization review.
 
 ### C. Chess exercises and lesson content
 
@@ -47,8 +48,8 @@ The repository audit found a working small product whose key models are still to
 - Added persisted per-exercise completion on enrolled lessons, with idempotent server updates and a saved completion indicator in lesson page navigation; solving an exercise remains separate from marking the lesson complete.
 - Added transactional chapter and lesson reorder endpoints with exact-ID validation, plus up/down controls in Studio.
 - Added a collapsible chapter and lesson table of contents to the study reader, with current lesson state, completion marks, direct lesson navigation, and Arabic label support.
-- Existing authored sectors act as lesson pages and support ordering, editing, deletion, and explicit saving; first-class page records remain.
-- Remaining: broader student UX, authoring autosave/error states, first-class lesson pages and table of contents, and a full workflow test suite.
+- Existing authored sectors act as ordered first-class lesson pages and support editing, deletion, and explicit saving. The page model supports multiple blocks, while Studio currently authors one block per page.
+- Remaining: broader student UX, authoring autosave/error states, multi-block page editing, and a full workflow test suite.
 
 ### E. Design system and bilingual interface — in progress
 
@@ -71,6 +72,7 @@ The repository audit found a working small product whose key models are still to
 - Introduce a migration ledger before changing the database structure. Existing rows remain the compatibility baseline.
 - Do not create simulated successful paid orders. Keep historical `test_paid` orders readable, and only add purchases after a provider confirms payment server-side.
 - Scope instructor mutation rights to their own courses using `books.created_by`; administrator privileges remain global, and existing rows with no creator remain manageable by administrators.
+- Store lesson pages in `lesson_pages` with a schema version and ordered JSONB blocks. Backfill each legacy content block into its own page, keep `lessons.content` as a compatibility mirror, and avoid destructive changes to existing lesson data.
 
 ## Input needed
 

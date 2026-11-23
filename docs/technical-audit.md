@@ -9,7 +9,7 @@ Audit date: 2026-11-23
 - API health: the running API reports PostgreSQL connected.
 - Course catalogue: `GET /api/books` returns HTTP 200.
 - Installed core versions: React 18.3.1, Vite 6.4.6, chess.js 1.4.0, react-chessboard 4.7.3, pg 8.23.1.
-- A Node test runner now runs 27 tests for exercise rules, lesson access and ownership, localization, progress calculation, reordering validation, metadata validation, media signatures, and branding validation.
+- A Node test runner now runs 32 tests for exercise rules, lesson access and ownership, lesson page normalization and compatibility, localization, progress calculation, reordering validation, metadata validation, media signatures, and branding validation.
 - Registration, purchase, and authoring flows were not exercised against the connected database because the project has no safe cleanup path for test records.
 
 ## Current implementation
@@ -31,10 +31,11 @@ The backend is a single Node HTTP server in `server/index.js`. It combines route
 - Courses now store an `en` or `ar` language, defaulting existing records to English, and the API returns the metadata for course overview display.
 - Instructors can create courses and manage their own courses only. Migration `005_course_ownership.sql` adds nullable `books.created_by` without changing existing rows; instructors see the published catalogue plus their own drafts, while admins retain global access. Brand settings and role management remain admin-only.
 - Exercise completion is saved independently of lesson completion in `lesson_progress.completed_exercises` by additive migration `006_exercise_progress.sql`. The API confirms the exercise block belongs to an enrolled lesson, stores completion idempotently, and returns saved exercise IDs for the learner's lesson navigation.
+- Lesson pages now use `lesson_pages` with ordering, schema version, and JSONB content blocks via additive migration `007_lesson_pages.sql`. Existing JSONB lesson blocks were copied one per page, reads prefer the page rows, and create/update routes dual-write the legacy content mirror and page records in one transaction.
 
 ## Partial, weak, or missing behavior
 
-- Lessons have a text field and a flat ordered block list called “sectors.” Studio can reorder those sectors as pages; students can navigate, resume, and use a chapter/lesson table of contents, but pages are not a first-class database model and rich-text editing is absent.
+- Lessons retain a legacy JSONB block mirror and now also have first-class ordered pages with schema-versioned JSONB block arrays. Studio currently treats each content block as its own page; grouping multiple blocks into one page and rich-text editing remain absent. Students can navigate/resume pages and use the chapter/lesson table of contents.
 - A line block is a single mainline. The trainer expects one SAN move at each student turn; it cannot represent alternate accepted moves or branch-specific paths.
 - Incorrect line feedback names the expected SAN move, revealing the answer. Explanations are attached to line steps but are not a real move-tree transition model.
 - The course overview now exposes the description through “About this course,” course language, instructor display name, outcomes, chapter structure, enrollment/purchase action, and learner progress for owned courses. Instructor profiles and a more complete instructor bio are still missing.
@@ -57,10 +58,10 @@ The backend is a single Node HTTP server in `server/index.js`. It combines route
 ## Architectural risks and direction
 
 1. **Application concentration:** extracting API, chess, lesson rendering, authoring, and localization modules is prerequisite to a maintainable redesign.
-2. **First-class lesson pages:** additive migration history and runner now exist; page records still need a versioned design that keeps legacy JSONB lesson content readable during rollout.
+2. **Page and block compatibility:** lesson pages now have a versioned additive store and a legacy backfill; Studio still needs to preserve and edit multiple blocks within one page.
 3. **Unvalidated JSONB:** content blocks and future move trees need versioned schemas and server-side validation before persistence.
 4. **Course access:** the API response itself must filter paid lesson content by enrollment/ownership, not rely on hidden frontend routes.
 5. **Paid checkout:** checkout is unavailable until a provider confirms payment server-side; frontend state cannot authorize access. The legacy `test_paid` schema value remains only so existing historical rows remain readable.
 6. **Progress meaning:** lesson, page, and exercise completion need separate events and a stated completion rule; URL/navigation alone cannot complete learning work.
 
-No data migration or destructive database operation was performed during this audit.
+Migration `007_lesson_pages.sql` copied each existing JSONB content block into an ordered page row. The legacy content remains intact as a compatibility mirror; no existing rows or fields were deleted.

@@ -150,6 +150,19 @@ CREATE TABLE IF NOT EXISTS lesson_progress (
 );
 CREATE INDEX IF NOT EXISTS lesson_progress_book_idx ON lesson_progress(user_id, book_id, completed_at);
 
+CREATE TABLE IF NOT EXISTS lesson_pages (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  lesson_id UUID NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+  title TEXT NOT NULL DEFAULT '',
+  position INTEGER NOT NULL CHECK (position >= 0),
+  schema_version SMALLINT NOT NULL DEFAULT 1 CHECK (schema_version >= 1),
+  blocks JSONB NOT NULL DEFAULT '[]'::jsonb CHECK (jsonb_typeof(blocks) = 'array'),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (lesson_id, position)
+);
+CREATE INDEX IF NOT EXISTS lesson_pages_order_idx ON lesson_pages(lesson_id, position);
+
 CREATE TABLE IF NOT EXISTS cart_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,

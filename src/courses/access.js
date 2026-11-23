@@ -6,6 +6,7 @@ function hideLessonContent(lesson) {
     note: '',
     fen: null,
     content: [],
+    pages: [],
   };
 }
 
