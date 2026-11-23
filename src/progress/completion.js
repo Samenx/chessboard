@@ -16,3 +16,17 @@ export function recordLessonCompletion(progress, lessonId, totalLessons) {
 export function lessonIsComplete(progress, lessonId) {
   return Boolean(lessonId && completedLessonIds(progress).includes(lessonId));
 }
+
+export function completedExerciseIds(progress, lessonId) {
+  const ids = progress?.lessonExercises?.[lessonId];
+  return Array.isArray(ids) ? ids : [];
+}
+
+export function recordExerciseCompletion(progress, lessonId, exerciseId) {
+  if (!lessonId || !exerciseId) return { ...progress };
+  const ids = [...new Set([...completedExerciseIds(progress, lessonId), exerciseId])];
+  return {
+    ...progress,
+    lessonExercises: { ...(progress.lessonExercises || {}), [lessonId]: ids },
+  };
+}

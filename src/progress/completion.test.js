@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { courseCompletionPercent, lessonIsComplete, recordLessonCompletion } from './completion.js';
+import { completedExerciseIds, courseCompletionPercent, lessonIsComplete, recordExerciseCompletion, recordLessonCompletion } from './completion.js';
 
 test('course percentage counts only distinct completed lessons', () => {
   assert.equal(courseCompletionPercent(4, []), 0);
@@ -16,4 +16,13 @@ test('marking a lesson complete is idempotent and leaves navigation separate', (
   assert.equal(lessonIsComplete(done, 'lesson-c'), true);
   assert.equal(done.progress, 25);
   assert.deepEqual(recordLessonCompletion(done, 'lesson-c', 4).completedLessonIds, ['lesson-c']);
+});
+
+test('exercise completion is saved independently and idempotently', () => {
+  const opened = { lessonIndex: 0, completedLessonIds: [] };
+  const first = recordExerciseCompletion(opened, 'lesson-a', 'exercise-a');
+  const repeated = recordExerciseCompletion(first, 'lesson-a', 'exercise-a');
+  assert.deepEqual(completedExerciseIds(repeated, 'lesson-a'), ['exercise-a']);
+  assert.deepEqual(repeated.completedLessonIds, []);
+  assert.deepEqual(completedExerciseIds(repeated, 'lesson-b'), []);
 });

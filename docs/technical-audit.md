@@ -30,6 +30,7 @@ The backend is a single Node HTTP server in `server/index.js`. It combines route
 - Student progress now stores the last lesson/page and per-lesson completion separately. Completion is explicit, idempotent, and determines the course percentage; free enrollments satisfy the same ownership check as purchases.
 - Courses now store an `en` or `ar` language, defaulting existing records to English, and the API returns the metadata for course overview display.
 - Instructors can create courses and manage their own courses only. Migration `005_course_ownership.sql` adds nullable `books.created_by` without changing existing rows; instructors see the published catalogue plus their own drafts, while admins retain global access. Brand settings and role management remain admin-only.
+- Exercise completion is saved independently of lesson completion in `lesson_progress.completed_exercises` by additive migration `006_exercise_progress.sql`. The API confirms the exercise block belongs to an enrolled lesson, stores completion idempotently, and returns saved exercise IDs for the learner's lesson navigation.
 
 ## Partial, weak, or missing behavior
 
@@ -38,7 +39,7 @@ The backend is a single Node HTTP server in `server/index.js`. It combines route
 - Incorrect line feedback names the expected SAN move, revealing the answer. Explanations are attached to line steps but are not a real move-tree transition model.
 - The course overview now exposes the description through “About this course,” course language, instructor display name, outcomes, chapter structure, enrollment/purchase action, and learner progress for owned courses. Instructor profiles and a more complete instructor bio are still missing.
 - Instructor profile metadata beyond the existing author display name is not modeled yet.
-- The branching engine has visual authoring and student play, but exercise completion is not yet saved as course progress; the old course progress model still records only a lesson index.
+- The branching engine has visual authoring and student play. Exercise completion persists as a separate lesson-level progress record, while course percentage still counts explicitly completed lessons only.
 - Lesson and sector navigation saves a resume position without completing the lesson. Students explicitly mark lessons complete, and cannot finish the course until each lesson is complete. Exercise-specific completion is not yet connected to this course progress model.
 - Chapter/lesson authoring is a multi-screen custom form. Lesson deletion and chapter/lesson reordering are scoped to the course owner or an admin; route-level integration tests and chapter deletion/reordering semantics remain to be verified more broadly.
 - The frontend still has substantial inline English copy. A small English/Arabic catalog, persistent language selection, document language/direction, and RTL/LTR layout rules now exist, but most marketplace and instructor copy remains untranslated and has not had full RTL usability verification.
@@ -56,7 +57,7 @@ The backend is a single Node HTTP server in `server/index.js`. It combines route
 ## Architectural risks and direction
 
 1. **Application concentration:** extracting API, chess, lesson rendering, authoring, and localization modules is prerequisite to a maintainable redesign.
-2. **No migration ledger:** additive SQL migrations need an ordered runner and a migration table before introducing first-class lesson pages or completion events.
+2. **First-class lesson pages:** additive migration history and runner now exist; page records still need a versioned design that keeps legacy JSONB lesson content readable during rollout.
 3. **Unvalidated JSONB:** content blocks and future move trees need versioned schemas and server-side validation before persistence.
 4. **Course access:** the API response itself must filter paid lesson content by enrollment/ownership, not rely on hidden frontend routes.
 5. **Simulated checkout:** orders must remain explicitly test-only until a provider confirms payment server-side; frontend state cannot authorize access.

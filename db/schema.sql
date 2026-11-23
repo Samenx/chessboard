@@ -143,6 +143,7 @@ CREATE TABLE IF NOT EXISTS lesson_progress (
   book_id TEXT NOT NULL REFERENCES books(id) ON DELETE CASCADE,
   lesson_id UUID NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
   page_index INTEGER NOT NULL DEFAULT 0 CHECK (page_index >= 0),
+  completed_exercises JSONB NOT NULL DEFAULT '[]'::jsonb CHECK (jsonb_typeof(completed_exercises) = 'array'),
   completed_at TIMESTAMPTZ,
   last_opened_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   PRIMARY KEY(user_id, lesson_id)
