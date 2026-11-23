@@ -1,0 +1,11 @@
+.language-select{height:30px;min-width:48px;padding:0 5px;border:1px solid #dce2e7;background:#fff;color:#445466;font-size:10px;cursor:pointer}
+html[data-theme=dark] .language-select{border-color:#45545f;background:#202b35;color:#e0e5e9}
+html[dir=rtl] body{direction:rtl}
+html[dir=rtl] .store-nav{direction:rtl}
+html[dir=rtl] .store-nav nav button,html[dir=rtl] .nav-search{direction:rtl}
+html[dir=rtl] .nav-user{margin-left:0;margin-right:auto}
+html[dir=rtl] .index-page,html[dir=rtl] .auth-page,html[dir=rtl] .library-page,html[dir=rtl] .product-page,html[dir=rtl] .learn-page,html[dir=rtl] .commerce-page,html[dir=rtl] .account-page{direction:rtl}
+html[dir=rtl] .board-square-wrap,html[dir=rtl] .course-board-shell,html[dir=rtl] .studio-board,html[dir=rtl] .exercise-editor-board,html[dir=rtl] .lesson-interactive-board,html[dir=rtl] .notation-row{direction:ltr}
+html[dir=rtl] .learn-footer,html[dir=rtl] .learn-actions,html[dir=rtl] .product-foot,html[dir=rtl] .library-actions{direction:rtl}
+html[dir=rtl] input[type=email],html[dir=rtl] input[type=password],html[dir=rtl] input[type=number],html[dir=rtl] input[type=url],html[dir=rtl] input[placeholder*=example],html[dir=rtl] .notation-row{direction:ltr;text-align:left}
+@media(max-width:760px){html[dir=rtl] .store-nav nav{right:0;left:auto}html[dir=rtl] .nav-search{direction:rtl}}

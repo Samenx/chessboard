@@ -26,7 +26,7 @@ Open the Vite URL printed by `npm run dev` (usually `http://localhost:5173`).
 
 ## Admin access
 
-The initial local admin account is `admin@admin.com` with password `1234`. `db:setup` creates it only when the address is not already registered; it does not reset an existing account's password. Change this password before exposing the app beyond local development.
+For a fresh database, set `ADMIN_EMAIL` and a private `ADMIN_PASSWORD` of at least 12 characters in `.env` before running `db:setup`. Setup creates that administrator only when no administrator exists and the address is not already registered. It does not reset passwords or promote existing accounts. Existing databases retain their current admin accounts.
 
 Only admins can open Admin Studio or use the server routes that create, edit, publish, delete books, upload media, change the hero image, and review user accounts. Regular signed-in users can create folders, save PGN lines, choose which color to play, and practice against automatic replies. A completed practice updates the line's review count.
 
@@ -34,4 +34,6 @@ Only admins can open Admin Studio or use the server routes that create, edit, pu
 
 `db:setup` creates the relational schema and inserts the sample course catalogue only if the `books` table is empty. It does not delete existing data. Course content, user accounts, orders, saved lines, and hero image settings are stored in PostgreSQL. Cart contents remain in the browser until an order is created.
 
-Checkout is currently a beta test flow: a signed-in user clicks **Checkout and get books**, the server records a test order and adds eligible published books to the user's library immediately. No card details are collected and no payment is taken. A book must have at least one lesson before checkout. Orders, library ownership, cart items, course progress, categories, and course content are stored in PostgreSQL. Guest cart items are also stored in PostgreSQL and move to the account when the user signs in.
+Set `PAYMENTS_MODE=beta` only for local testing. Beta checkout creates `test_paid` orders and grants test access; it does not collect card details or take payment. Checkout is disabled when the setting is absent or set to another value. Real orders must be confirmed by a payment provider before they are marked `paid`. A book must have at least one lesson before checkout. Free courses use a separate enrollment flow. Orders, enrollments, library access, cart items, course progress, categories, and course content are stored in PostgreSQL. Guest cart items are also stored in PostgreSQL and move to the account when the user signs in.
+
+`npm run db:migrate` applies ordered, transactional SQL migrations recorded in `schema_migrations`. `db:setup` also applies pending migrations after the existing idempotent schema script.

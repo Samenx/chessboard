@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS books (
   id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
   author TEXT NOT NULL DEFAULT '',
+  language TEXT NOT NULL DEFAULT 'en' CHECK (language IN ('en','ar')),
   description TEXT NOT NULL DEFAULT '',
   category TEXT NOT NULL DEFAULT 'Openings',
   level TEXT NOT NULL DEFAULT 'Beginner',
@@ -58,7 +59,7 @@ CREATE TABLE IF NOT EXISTS orders (
   customer_email TEXT,
   client_key TEXT NOT NULL DEFAULT 'legacy',
   user_id UUID,
-  status TEXT NOT NULL DEFAULT 'pending_payment' CHECK (status IN ('pending_payment','paid','failed','refunded')),
+  status TEXT NOT NULL DEFAULT 'pending_payment' CHECK (status IN ('pending_payment','test_paid','paid','failed','cancelled','refunded')),
   currency CHAR(3) NOT NULL DEFAULT 'USD',
   subtotal NUMERIC(10,2) NOT NULL CHECK (subtotal >= 0),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -130,8 +131,21 @@ CREATE TABLE IF NOT EXISTS course_progress (
   lesson_index INTEGER NOT NULL DEFAULT 0 CHECK (lesson_index >= 0),
   progress INTEGER NOT NULL DEFAULT 0 CHECK (progress BETWEEN 0 AND 100),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  last_lesson_id UUID REFERENCES lessons(id) ON DELETE SET NULL,
+  last_page_index INTEGER NOT NULL DEFAULT 0 CHECK (last_page_index >= 0),
   PRIMARY KEY(user_id, book_id)
 );
+
+CREATE TABLE IF NOT EXISTS lesson_progress (
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  book_id TEXT NOT NULL REFERENCES books(id) ON DELETE CASCADE,
+  lesson_id UUID NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+  page_index INTEGER NOT NULL DEFAULT 0 CHECK (page_index >= 0),
+  completed_at TIMESTAMPTZ,
+  last_opened_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY(user_id, lesson_id)
+);
+CREATE INDEX IF NOT EXISTS lesson_progress_book_idx ON lesson_progress(user_id, book_id, completed_at);
 
 CREATE TABLE IF NOT EXISTS cart_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "concurrently -k \"node server/index.js\" \"vite --host 0.0.0.0\"",
     "build": "vite build",
+    "test": "node --test",
     "preview": "vite preview",
     "api": "node server/index.js",
+    "db:migrate": "node db/migrate.js",
     "start": "node server/index.js",
     "db:setup": "node db/setup.js"
   },

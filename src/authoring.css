@@ -1,0 +1,12 @@
+.chapter-open-card{grid-template-columns:36px minmax(0,1fr) auto auto auto;gap:10px}
+.chapter-open-card .plain-action{min-width:32px;padding:7px;justify-content:center}
+.chapter-lesson-row{grid-template-columns:32px minmax(0,1fr) repeat(5,auto)}
+.chapter-lesson-row button[aria-label^="Move lesson"]{min-width:32px;padding-inline:5px}
+.overview-progress{display:grid;gap:7px;margin:8px 0 4px;padding:10px 0;border-block:1px solid var(--line)}
+.overview-progress>div{display:flex;align-items:center;justify-content:space-between;font-size:10px}
+.overview-progress>div span{color:var(--muted)}
+.overview-progress>div b{color:var(--blue);font-family:var(--mono)}
+.overview-progress>i{height:4px;background:var(--soft)}
+.overview-progress>i>b{display:block;height:100%;background:var(--blue)}
+@media(max-width:700px){.chapter-open-card{grid-template-columns:28px minmax(0,1fr) auto auto}.chapter-open-card .blue-button{grid-column:2/-1;justify-self:start}.chapter-lesson-row{grid-template-columns:24px minmax(0,1fr) repeat(5,auto);gap:5px}.chapter-lesson-row button{min-width:0!important;padding-inline:5px}}
+@media(max-width:460px){.chapter-lesson-row{grid-template-columns:24px minmax(0,1fr) repeat(2,auto)}.chapter-lesson-row button:nth-of-type(n+3){grid-row:auto}.chapter-lesson-row small{max-width:none}}

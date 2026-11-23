@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { randomBytes, scrypt as scryptCallback } from 'node:crypto';
 import { promisify } from 'node:util';
 import { pool } from './pool.js';
+import { runMigrations } from './migrate.js';
 const scrypt=promisify(scryptCallback);
 
 const root = path.dirname(fileURLToPath(import.meta.url));
@@ -23,13 +24,19 @@ const seedBooks = [
 
 try {
   await pool.query(schema);
-  const adminEmail='admin@admin.com';
-  const adminSalt=randomBytes(16).toString('hex');
-  const adminHash=(await scrypt('1234',adminSalt,64)).toString('hex');
-  await pool.query(`INSERT INTO users(display_name,email,password_salt,password_hash,role)
-    SELECT 'Chess Arena Admin',$1,$2,$3,'admin'
-    WHERE NOT EXISTS(SELECT 1 FROM users WHERE LOWER(email)=LOWER($1))`,[adminEmail,adminSalt,adminHash]);
-  await pool.query("UPDATE users SET role='admin' WHERE LOWER(email)=LOWER($1)",[adminEmail]);
+  await runMigrations(pool);
+  const { rows: admins } = await pool.query("SELECT id FROM users WHERE role='admin' LIMIT 1");
+  const adminEmail=String(process.env.ADMIN_EMAIL||'').trim().toLowerCase();
+  const adminPassword=process.env.ADMIN_PASSWORD||'';
+  if(!admins.length&&adminEmail&&adminPassword.length>=12){
+    const existing=await pool.query('SELECT id FROM users WHERE LOWER(email)=LOWER($1)',[adminEmail]);
+    if(!existing.rowCount){
+      const adminSalt=randomBytes(16).toString('hex');
+      const adminHash=(await scrypt(adminPassword,adminSalt,64)).toString('hex');
+      await pool.query(`INSERT INTO users(display_name,email,password_salt,password_hash,role)
+        VALUES ('Chess Arena Admin',$1,$2,$3,'admin')`,[adminEmail,adminSalt,adminHash]);
+    }else console.warn('No initial administrator was created: ADMIN_EMAIL is already in use by a non-admin account.');
+  }else if(!admins.length)console.warn('No initial administrator exists. Set ADMIN_EMAIL and an ADMIN_PASSWORD of at least 12 characters, then run db:setup again.');
   const { rows } = await pool.query('SELECT COUNT(*)::int AS count FROM books');
   if (rows[0].count === 0) {
     for (const book of seedBooks) {

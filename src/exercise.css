@@ -1,0 +1,69 @@
+.exercise-editor{margin:18px 0;padding:18px;border:1px solid var(--line);background:#f8fafb;color:#293b4b}
+.exercise-editor-setup{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.exercise-editor label{display:flex;min-width:0;flex-direction:column;gap:7px;color:#687987;font:700 9px var(--mono);letter-spacing:.08em}
+.exercise-editor input:not([type=checkbox]),.exercise-editor select,.exercise-editor textarea{width:100%;min-width:0;border:1px solid #dce2e7;background:#fff;padding:10px;color:#293b4b;font:12px 'DM Sans',Arial,sans-serif;letter-spacing:normal}
+.exercise-editor .exercise-toggle{display:flex;flex-direction:row;align-items:center;gap:8px;letter-spacing:normal;font:11px 'DM Sans',Arial,sans-serif}
+.exercise-toggle input{accent-color:#1769aa}
+.exercise-editor-grid{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(300px,1.2fr);gap:18px;margin-top:18px;align-items:start}
+.exercise-tree-panel,.exercise-position-panel{min-width:0;padding:14px;border:1px solid var(--line);background:#fff}
+.exercise-panel-heading,.exercise-position-heading{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.exercise-panel-heading b,.exercise-position-heading b{color:#2e4355;font:700 15px 'DM Sans',Arial,sans-serif}
+.exercise-panel-heading span,.exercise-position-heading span{color:#778794;font-size:10px;line-height:1.5}
+.exercise-root,.exercise-tree-list button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:8px;padding:9px;border:1px solid #dce2e7;background:#f8fafb;color:#344a5c;text-align:left;cursor:pointer}
+.exercise-root.selected,.exercise-tree-list button.selected{border-color:#1769aa;background:#eef6fc}
+.exercise-tree-list{margin:8px 0 8px 12px;padding:0 0 0 12px;border-left:1px solid #d3dce3;list-style:none}
+.exercise-tree-list li{margin:7px 0}
+.exercise-tree-list button b{font:700 12px var(--mono)}
+.exercise-tree-list button span{color:#788794;font-size:9px}
+.exercise-editor-board{width:min(100%,480px);margin:0 auto;overflow:hidden}
+.exercise-add-move{display:flex;gap:8px;margin:10px 0;direction:ltr}
+.exercise-add-move input{flex:1}
+.exercise-position-panel>.exercise-toggle{margin:10px 0}
+.exercise-node-copy{margin-top:12px}
+.exercise-editor-error{display:block;margin-top:10px;padding:9px;border:1px solid #dca8a8;background:#fff2f2;color:#963d3d;font-size:11px}
+.exercise-move-feedback{margin-top:12px;padding:12px;border:1px solid #dce2e7;background:#fff;color:#536778;font-size:12px;line-height:1.65}
+.sector-block-actions{display:flex;align-items:center;gap:4px}
+html[data-theme=dark] .exercise-editor{background:#1b242c;color:#e0e7ed;border-color:#3a4854}
+html[data-theme=dark] .exercise-editor label{color:#aab7c1}
+html[data-theme=dark] .exercise-editor input:not([type=checkbox]),html[data-theme=dark] .exercise-editor select,html[data-theme=dark] .exercise-editor textarea,html[data-theme=dark] .exercise-tree-panel,html[data-theme=dark] .exercise-position-panel{background:#202b35;color:#e0e7ed;border-color:#3a4854}
+html[data-theme=dark] .exercise-panel-heading b,html[data-theme=dark] .exercise-position-heading b,html[data-theme=dark] .exercise-root,html[data-theme=dark] .exercise-tree-list button{background:#202b35;color:#e0e7ed;border-color:#3a4854}
+html[data-theme=dark] .exercise-panel-heading span,html[data-theme=dark] .exercise-position-heading span,html[data-theme=dark] .exercise-tree-list button span{color:#aab7c1}
+html[data-theme=dark] .exercise-root.selected,html[data-theme=dark] .exercise-tree-list button.selected{background:#263540;border-color:#57758d}
+html[data-theme=dark] .exercise-move-feedback{background:#202b35;color:#d2dbe2;border-color:#3a4854}
+@media(max-width:760px){.exercise-editor-grid{grid-template-columns:1fr}.exercise-editor-setup{grid-template-columns:1fr}.exercise-editor{padding:12px}.exercise-tree-panel,.exercise-position-panel{padding:10px}}
+
+html[data-theme=light] .learn-page{background:#f1f3f5;color:#243544}
+html[data-theme=light] .learn-top{border-color:#d8e0e6}
+html[data-theme=light] .learn-top .back-crumb{color:#657787}
+html[data-theme=light] .learn-top h1{color:#243544}
+html[data-theme=light] .learn-breadcrumb,html[data-theme=light] .lesson-meter{color:#637584}
+html[data-theme=light] .lesson-meter i{background:#dfe5e9}
+html[data-theme=light] .lesson-meter i b{background:#4e9f42}
+html[data-theme=light] .learn-board,html[data-theme=light] .learn-text{background:#fff!important;color:#283b4b;border-color:#d9e1e7!important;box-shadow:0 8px 24px #2333420d}
+html[data-theme=light] .learn-text h2{color:#243b4e}
+html[data-theme=light] .learn-text>p{color:#566a79}
+html[data-theme=light] .learn-chapter-label{color:#398331}
+html[data-theme=light] .teacher-line{color:#455a6b}
+html[data-theme=light] .teacher-line small{color:#7d8b96}
+html[data-theme=light] .learn-actions,html[data-theme=light] .learn-footer{border-color:#d9e1e7}
+html[data-theme=light] .learn-actions button,html[data-theme=light] .learn-footer>button:first-child{background:#f6f8f9;color:#465b6b;border-color:#d6dfe5}
+html[data-theme=light] .learn-actions button:hover,html[data-theme=light] .learn-footer>button:first-child:hover{background:#eaf0f4}
+html[data-theme=light] .learn-page .board-controls{background:#f7f9fa;border-color:#d6dfe5}
+html[data-theme=light] .learn-page .board-controls button{background:#fff;color:#41586a;border-color:#d6dfe5}
+html[data-theme=light] .learn-page .board-controls button:not(:disabled):hover{background:#edf2f5}
+html[data-theme=light] .learn-page .board-controls span{color:#667a89}
+html[data-theme=light] .learn-page .notation-row{background:#fff;color:#586c7c;border-color:#d6dfe5}
+html[data-theme=light] .learn-page .notation-row button{color:#506576}
+html[data-theme=light] .learn-page .notation-row button.move-active{background:#e4f1df!important;color:#2a6126!important}
+html[data-theme=light] .lesson-sector-toolbar>span{background:#edf6e9;border-color:#d5e9cc;color:#398331}
+html[data-theme=light] .lesson-sector-toolbar>b{color:#2a3e4e}
+html[data-theme=light] .lesson-sector-tabs button{background:#e7ecef;color:#516574}
+html[data-theme=light] .lesson-sector-tabs button.active{background:#e6f1e2;color:#34762e;box-shadow:inset 0 0 0 1px #9fc493}
+html[data-theme=light] .sector-explanation-pane{background:#fff;color:#2a3e4e;border-color:#d9e1e7;box-shadow:0 8px 24px #2333420d}
+html[data-theme=light] .sector-explanation-pane h2{color:#243b4e}
+html[data-theme=light] .sector-explanation-pane>p{color:#566a79}
+html[data-theme=light] .sector-board-heading>div span,html[data-theme=light] .sector-board-footer{color:#647787}
+html[data-theme=light] .board-rotate-button,html[data-theme=light] .sector-board-footer button,html[data-theme=light] .lesson-sector-controls .outline-action{background:#fff;color:#465b6b;border-color:#d6dfe5}
+html[data-theme=light] .lesson-sector-controls .blue-button{background:#347d32;border-color:#347d32;color:#fff}
+.chapter-lesson-row{grid-template-columns:32px minmax(0,1fr) auto auto auto}
+@media(max-width:560px){.chapter-lesson-row{grid-template-columns:24px minmax(0,1fr) auto auto auto}.chapter-lesson-row .plain-action{font-size:0;min-width:38px;padding:7px}.chapter-lesson-row .plain-action svg{width:15px;height:15px}}
