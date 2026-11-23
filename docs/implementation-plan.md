@@ -28,6 +28,7 @@ The repository audit found a working small product whose key models are still to
 - Filtered unowned paid content at the API boundary; review remains for future endpoints.
 - Added the first free-enrollment route and records.
 - Added validated English/Arabic course language metadata and exposed it in the course overview.
+- Added admin-controlled platform name, logo, primary color, and a live settings preview while preserving the existing hero-image control.
 - Remaining: instructor profile metadata, first-class lesson page storage, and a broader authorization review.
 
 ### C. Chess exercises and lesson content

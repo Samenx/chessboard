@@ -1,0 +1,7 @@
+.brand-logo{width:34px;height:34px;object-fit:contain}
+.brand-preview{display:flex;align-items:center;gap:9px;padding:8px 11px;border:1px solid var(--line);color:var(--brand-preview);font-size:12px}
+.brand-preview>span{width:25px;height:25px;display:grid;place-items:center;background:var(--brand-preview);color:#fff;font-size:19px}
+.brand-preview img{width:25px;height:25px;object-fit:contain}
+.brand-color-field{width:70px!important;height:40px;padding:3px!important;cursor:pointer}
+.admin-tool-card .brand-preview{margin-left:auto}
+.admin-tool-card>small[role=alert]{display:block;color:#b83c35;margin:8px 0}

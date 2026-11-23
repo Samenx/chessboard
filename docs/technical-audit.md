@@ -9,7 +9,7 @@ Audit date: 2026-11-23
 - API health: the running API reports PostgreSQL connected.
 - Course catalogue: `GET /api/books` returns HTTP 200.
 - Installed core versions: React 18.3.1, Vite 6.4.6, chess.js 1.4.0, react-chessboard 4.7.3, pg 8.23.1.
-- The initial audit found no test script or test files. A Node test runner now runs 21 tests for exercise rules, lesson access, localization, progress calculation, reordering validation, metadata validation, and media signatures.
+- The initial audit found no test script or test files. A Node test runner now runs 24 tests for exercise rules, lesson access, localization, progress calculation, reordering validation, metadata validation, media signatures, and branding validation.
 - Registration, purchase, and authoring flows were not exercised against the connected database because the project has no safe cleanup path for test records.
 
 ## Current implementation
@@ -41,7 +41,7 @@ The backend is a single Node HTTP server in `server/index.js`. It combines route
 - Lesson and sector navigation saves a resume position without completing the lesson. Students explicitly mark lessons complete, and cannot finish the course until each lesson is complete. Exercise-specific completion is not yet connected to this course progress model.
 - Chapter/lesson authoring is a multi-screen custom form. Lesson deletion and chapter/lesson reordering now have admin-only routes; route-level integration tests and chapter deletion/reordering semantics remain to be verified more broadly.
 - The frontend still has substantial inline English copy. A small English/Arabic catalog, persistent language selection, document language/direction, and RTL/LTR layout rules now exist, but most marketplace and instructor copy remains untranslated and has not had full RTL usability verification.
-- Global settings cover the hero image only. Theme state is not a consistent token system across the catalog and reader.
+- Global settings now cover the hero image and platform name, logo, and primary color. Theme choice is visitor-persistent and shared across light/dark surfaces, but the design token system and appearance coverage still need consolidation.
 - The initial audit found that `/api/books` exposed full paid lesson payloads. The first implementation slice now filters lesson text, PGN, FEN, and content blocks for viewers without ownership; a live API check confirmed five unowned paid courses returned no lesson payload. Course API access still needs a broader authorization review as new lesson/page endpoints are added.
 - `server/index.js` accepts a broad JSON body limit and has no centralized schema validation or general API error boundary. Uploads now check common media signatures against the claimed MIME type and responses set `X-Content-Type-Options: nosniff`; files are not decoded by a full media parser and upload security needs further review.
 
