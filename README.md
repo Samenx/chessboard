@@ -10,7 +10,6 @@ Create a `.env` file in the project folder:
 DATABASE_URL=postgresql://postgres:YOUR_POSTGRES_PASSWORD@localhost:5432/chessboard_press
 API_PORT=3001
 API_HOST=127.0.0.1
-PAYMENTS_MODE=beta
 ```
 
 Use the PostgreSQL role password, not the pgAdmin master password. URL-encode special characters in the password (for example, `@` becomes `%40`). Keep `.env` private; it is ignored by Git.
@@ -35,4 +34,4 @@ Only admins can open Admin Studio or use the server routes that create, edit, pu
 
 `db:setup` creates the relational schema and inserts the sample course catalogue only if the `books` table is empty. It does not delete existing data. Course content, user accounts, orders, saved lines, and hero image settings are stored in PostgreSQL. Cart contents remain in the browser until an order is created.
 
-Local checkout can run in beta test mode (`PAYMENTS_MODE=beta`). It records a simulated payment and does not collect card details or move money. Replace or disable this test flow before deployment.
+Checkout is currently a beta test flow: a signed-in user clicks **Checkout and get books**, the server records a test order and adds eligible published books to the user's library immediately. No card details are collected and no payment is taken. A book must have at least one lesson before checkout. Orders, library ownership, cart items, course progress, categories, and course content are stored in PostgreSQL. Guest cart items are also stored in PostgreSQL and move to the account when the user signs in.

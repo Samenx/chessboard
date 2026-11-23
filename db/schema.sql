@@ -124,6 +124,31 @@ CREATE TABLE IF NOT EXISTS purchases (
 );
 ALTER TABLE purchases ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES users(id) ON DELETE CASCADE;
 
+CREATE TABLE IF NOT EXISTS course_progress (
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  book_id TEXT NOT NULL REFERENCES books(id) ON DELETE CASCADE,
+  lesson_index INTEGER NOT NULL DEFAULT 0 CHECK (lesson_index >= 0),
+  progress INTEGER NOT NULL DEFAULT 0 CHECK (progress BETWEEN 0 AND 100),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY(user_id, book_id)
+);
+
+CREATE TABLE IF NOT EXISTS cart_items (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  client_key TEXT NOT NULL,
+  book_id TEXT NOT NULL REFERENCES books(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(client_key, book_id)
+);
+CREATE INDEX IF NOT EXISTS cart_items_user_idx ON cart_items(user_id, created_at);
+
+CREATE TABLE IF NOT EXISTS course_categories (
+  name TEXT PRIMARY KEY,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+INSERT INTO course_categories(name) VALUES ('Openings'),('Middlegame'),('Tactics'),('Strategy'),('Endgames') ON CONFLICT DO NOTHING;
+
 CREATE TABLE IF NOT EXISTS app_settings (
   key TEXT PRIMARY KEY,
   value JSONB NOT NULL DEFAULT '{}'::jsonb,
