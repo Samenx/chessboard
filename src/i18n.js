@@ -12,7 +12,7 @@ const ar = {
   'Already have an account?':'لديك حساب بالفعل؟','Account settings':'إعدادات الحساب','Sign out':'تسجيل الخروج','Shopping cart':'سلة التسوق','Your cart is empty':'سلتك فارغة','Order summary':'ملخص الطلب',
   'My library':'مكتبتي','Pick up where you left off, or review a line you have learned.':'تابع من حيث توقفت، أو راجع خطًا تعلّمته.','Practice saved lines':'تدرّب على الخطوط المحفوظة','Start learning':'ابدأ التعلّم','Continue learning':'تابع التعلّم',
   'Mark lesson complete':'أكمل الدرس','Lesson complete':'اكتمل الدرس','Previous':'السابق','Next lesson':'الدرس التالي','Finish course':'إنهاء الدورة','Previous sector':'القسم السابق','Next sector':'القسم التالي','Flip board':'اقلب الرقعة','Review line':'راجع الخط',
-  'Start from beginning':'ابدأ من البداية','Browse the store':'تصفّح المتجر','Course at a glance':'لمحة عن الدورة','About this course':'عن هذه الدورة','Course language':'لغة الدورة','English':'الإنجليزية','Arabic':'العربية','Your progress':'تقدّمك','Continue studying':'تابع التعلّم','Chapter':'الفصل','lessons':'دروس','Lesson':'الدرس'
+  'Start from beginning':'ابدأ من البداية','Browse the store':'تصفّح المتجر','Course at a glance':'لمحة عن الدورة','Course contents':'محتويات الدورة','About this course':'عن هذه الدورة','Course language':'لغة الدورة','English':'الإنجليزية','Arabic':'العربية','Your progress':'تقدّمك','Continue studying':'تابع التعلّم','Chapter':'الفصل','lessons':'دروس','Lesson':'الدرس'
 };
 
 export function translate(value, language='en') {

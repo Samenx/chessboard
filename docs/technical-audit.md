@@ -34,7 +34,7 @@ The backend is a single Node HTTP server in `server/index.js`. It combines route
 
 ## Partial, weak, or missing behavior
 
-- Lessons have a text field and a flat ordered block list called “sectors.” Studio can reorder those sectors as pages and students can navigate and resume them, but pages are not a first-class database model and rich-text editing is absent.
+- Lessons have a text field and a flat ordered block list called “sectors.” Studio can reorder those sectors as pages; students can navigate, resume, and use a chapter/lesson table of contents, but pages are not a first-class database model and rich-text editing is absent.
 - A line block is a single mainline. The trainer expects one SAN move at each student turn; it cannot represent alternate accepted moves or branch-specific paths.
 - Incorrect line feedback names the expected SAN move, revealing the answer. Explanations are attached to line steps but are not a real move-tree transition model.
 - The course overview now exposes the description through “About this course,” course language, instructor display name, outcomes, chapter structure, enrollment/purchase action, and learner progress for owned courses. Instructor profiles and a more complete instructor bio are still missing.

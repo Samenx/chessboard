@@ -46,7 +46,8 @@ The repository audit found a working small product whose key models are still to
 - Added explicit per-lesson completion, saved sector/page position, resumable lesson selection, and course completion based on distinct completed lessons.
 - Added persisted per-exercise completion on enrolled lessons, with idempotent server updates and a saved completion indicator in lesson page navigation; solving an exercise remains separate from marking the lesson complete.
 - Added transactional chapter and lesson reorder endpoints with exact-ID validation, plus up/down controls in Studio.
-- Existing authored sectors act as lesson pages and support ordering, editing, deletion, and explicit saving; first-class page records and a lesson table of contents remain.
+- Added a collapsible chapter and lesson table of contents to the study reader, with current lesson state, completion marks, direct lesson navigation, and Arabic label support.
+- Existing authored sectors act as lesson pages and support ordering, editing, deletion, and explicit saving; first-class page records remain.
 - Remaining: broader student UX, authoring autosave/error states, first-class lesson pages and table of contents, and a full workflow test suite.
 
 ### E. Design system and bilingual interface — in progress

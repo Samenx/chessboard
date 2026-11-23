@@ -11,6 +11,7 @@ test('Arabic translates core navigation and declares RTL direction', () => {
   assert.equal(translate('Courses', 'ar'), 'الدورات');
   assert.equal(translate('Mark lesson complete', 'ar'), 'أكمل الدرس');
   assert.equal(translate('Course language', 'ar'), 'لغة الدورة');
+  assert.equal(translate('Course contents', 'ar'), 'محتويات الدورة');
   assert.equal(translate('English', 'ar'), 'الإنجليزية');
   assert.equal(directionFor('ar'), 'rtl');
   assert.equal(directionFor('en'), 'ltr');
