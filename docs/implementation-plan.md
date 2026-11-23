@@ -8,7 +8,7 @@ The repository audit found a working small product whose key models are still to
 2. **Data foundation:** introduce ordered additive migrations and versioned page/block/exercise schemas while preserving legacy JSONB lesson content.
 3. **Authoring and study flow:** extract the large React module, make course overview and authoring workflows coherent, and add first-class pages, block editing/reordering, previews, drafts, and safe deletes.
 4. **Design and language:** unify light/dark design tokens, then complete English/Arabic translations and direction-aware layouts.
-5. **Marketplace and administration:** provide free enrollment, make test checkout status explicit, add access checks and settings for branding.
+5. **Marketplace and administration:** provide free enrollment, block paid access until server-verified provider payment exists, add access checks and settings for branding.
 6. **Quality:** add unit, integration, and workflow coverage as each capability lands, then run the complete regression suite.
 
 ## Phases
@@ -18,7 +18,7 @@ The repository audit found a working small product whose key models are still to
 - Recorded the baseline and limitations in `docs/technical-audit.md`.
 - Added a chess.js-validated branch tree, visual authoring, student play, feedback, explanations, reset, and backward decision navigation.
 - Filtered unowned paid lesson payloads from catalogue API responses.
-- Added a transactional migration ledger, free-course enrollment, and a distinct `test_paid` order status.
+- Added a transactional migration ledger, free-course enrollment, and a distinct legacy `test_paid` order status. New simulated orders have since been disabled.
 - Added a Node test command with chess and access-projection tests.
 - Added safe lesson deletion and persistent reader-aware theme selection.
 
@@ -59,7 +59,7 @@ The repository audit found a working small product whose key models are still to
 ### F. Marketplace, branding, and release quality
 
 - Add direct free enrollment and enforce paid access server-side.
-- Keep beta checkout clearly separated from verified provider payments.
+- Keep paid checkout unavailable until a real provider can verify payment server-side; never grant course access from a client or test checkout.
 - Add controlled global appearance settings and preview.
 - Run build, unit, API, access-control, and end-to-end regression checks.
 
@@ -69,7 +69,7 @@ The repository audit found a working small product whose key models are still to
 - Use chess.js as the sole authority for legality and position state.
 - Model a move tree as versioned JSON with server-side semantic validation first; this avoids a premature graph-table migration while ensuring branches are real and testable. Revisit storage only if analytics or collaborative editing requires per-node relational queries.
 - Introduce a migration ledger before changing the database structure. Existing rows remain the compatibility baseline.
-- Treat the current checkout as a test simulation and do not describe it as real payment processing.
+- Do not create simulated successful paid orders. Keep historical `test_paid` orders readable, and only add purchases after a provider confirms payment server-side.
 - Scope instructor mutation rights to their own courses using `books.created_by`; administrator privileges remain global, and existing rows with no creator remain manageable by administrators.
 
 ## Input needed

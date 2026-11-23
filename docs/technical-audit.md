@@ -25,7 +25,7 @@ The backend is a single Node HTTP server in `server/index.js`. It combines route
 - Admin checks exist on course mutation, category creation, media upload, and user role changes.
 - Courses/books, chapters, and lessons can be created and edited. Lessons persist a JSONB array of content blocks.
 - The position editor uses chess.js to build FEN positions; line parsing and board moves also use chess.js.
-- The marketplace has a persistent cart, orders, purchases, and library access. Checkout previously created a `paid` order directly in the backend. It now requires `PAYMENTS_MODE=beta` and writes `test_paid`, distinct from provider-confirmed `paid` orders.
+- The marketplace has a persistent cart, order history, purchases, and library access. New paid checkout requests now return HTTP 503 because no payment provider is configured; no new order or purchase is created. Existing `test_paid` records remain readable as historical data, and free enrollment remains available.
 - Free enrollment now has a dedicated table and authenticated API route; the storefront action and library ownership use that enrollment record.
 - Student progress now stores the last lesson/page and per-lesson completion separately. Completion is explicit, idempotent, and determines the course percentage; free enrollments satisfy the same ownership check as purchases.
 - Courses now store an `en` or `ar` language, defaulting existing records to English, and the API returns the metadata for course overview display.
@@ -60,7 +60,7 @@ The backend is a single Node HTTP server in `server/index.js`. It combines route
 2. **First-class lesson pages:** additive migration history and runner now exist; page records still need a versioned design that keeps legacy JSONB lesson content readable during rollout.
 3. **Unvalidated JSONB:** content blocks and future move trees need versioned schemas and server-side validation before persistence.
 4. **Course access:** the API response itself must filter paid lesson content by enrollment/ownership, not rely on hidden frontend routes.
-5. **Simulated checkout:** orders must remain explicitly test-only until a provider confirms payment server-side; frontend state cannot authorize access.
+5. **Paid checkout:** checkout is unavailable until a provider confirms payment server-side; frontend state cannot authorize access. The legacy `test_paid` schema value remains only so existing historical rows remain readable.
 6. **Progress meaning:** lesson, page, and exercise completion need separate events and a stated completion rule; URL/navigation alone cannot complete learning work.
 
 No data migration or destructive database operation was performed during this audit.
