@@ -29,6 +29,9 @@ The repository audit found a working small product whose key models are still to
 - Added the first free-enrollment route and records.
 - Added validated English/Arabic course language metadata and exposed it in the course overview.
 - Added admin-controlled platform name, logo, primary color, and a live settings preview while preserving the existing hero-image control.
+- Added instructor course creation and ownership: instructors can see the published catalogue and their own drafts, and can manage only courses they created; administrators retain global course controls.
+- Added additive migration `005_course_ownership.sql` and a matching schema declaration for `books.created_by`; legacy courses remain administrator-managed.
+- Kept platform brand settings and user-role management administrator-only.
 - Remaining: instructor profile metadata, first-class lesson page storage, and a broader authorization review.
 
 ### C. Chess exercises and lesson content
@@ -65,6 +68,7 @@ The repository audit found a working small product whose key models are still to
 - Model a move tree as versioned JSON with server-side semantic validation first; this avoids a premature graph-table migration while ensuring branches are real and testable. Revisit storage only if analytics or collaborative editing requires per-node relational queries.
 - Introduce a migration ledger before changing the database structure. Existing rows remain the compatibility baseline.
 - Treat the current checkout as a test simulation and do not describe it as real payment processing.
+- Scope instructor mutation rights to their own courses using `books.created_by`; administrator privileges remain global, and existing rows with no creator remain manageable by administrators.
 
 ## Input needed
 

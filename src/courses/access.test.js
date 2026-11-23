@@ -27,3 +27,12 @@ test('owners, administrators, and enrolled free-course students retain lesson co
   assert.equal(projectBookForViewer({ ...book, price: 0 }).lessons[0].text, '');
   assert.equal(projectBookForViewer({ ...book, price: 0, owned: true }).lessons[0].text, 'Private lesson');
 });
+
+test('course creators can preview and manage only their own course projection', () => {
+  const creator = projectBookForViewer(book, { isCreator: true });
+  const stranger = projectBookForViewer(book, { isCreator: false });
+  assert.equal(creator.canManage, true);
+  assert.equal(creator.lessons[0].content.length, 1);
+  assert.equal(stranger.canManage, false);
+  assert.equal(stranger.lessons[0].content.length, 0);
+});

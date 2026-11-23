@@ -10,13 +10,13 @@ function hideLessonContent(lesson) {
 }
 
 /** Remove paid lesson material before a catalogue response leaves the server. */
-export function projectBookForViewer(book, { isAdmin = false } = {}) {
-  const canReadContent = isAdmin || book.owned === true;
-  if (canReadContent) return book;
+export function projectBookForViewer(book, { isAdmin = false, isCreator = false } = {}) {
+  const canReadContent = isAdmin || isCreator || book.owned === true;
+  if (canReadContent) return { ...book, canManage: isAdmin || isCreator };
   const lessons = (book.lessons || []).map(hideLessonContent);
   const chapterList = (book.chapterList || []).map(chapter => ({
     ...chapter,
     lessons: (chapter.lessons || []).map(hideLessonContent),
   }));
-  return { ...book, lessons, chapterList };
+  return { ...book, lessons, chapterList, canManage: false };
 }
